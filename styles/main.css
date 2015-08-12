@@ -26,3 +26,18 @@ body.landing {
 	position: relative;
 	left: 2rem;
 }
+
+.container {
+	margin: 0 auto;
+	max-width: 64rem;
+}
+ 
+/* Small-to-medium screens (640px) */
+@media (min-width: 40rem) {
+	html{ font-size: 112%; }
+}
+
+/* Large screens (1024px) */
+@media (min-width: 64rem) {
+	html{ font-size: 120%; }
+}
