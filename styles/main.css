@@ -32,6 +32,15 @@ body.landing {
 	max-width: 64rem;
 }
  
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}	
+
+.clearfix:after {
+	clear: both;
+}
+
 /* Small-to-medium screens (640px) */
 @media (min-width: 40rem) {
 	html{ font-size: 112%; }
