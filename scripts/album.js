@@ -29,6 +29,21 @@ var albumMarconi = {
 	]
 };
 
+var albumAranofsky = {
+	name: 'Swan Requiem',
+	artist: 'Darren Aranofsky',
+	label: 'Protozoa',
+	year: '1998',
+	albumArtUrl: 'assets/images/album_covers/06.png',
+	songs: [
+		{ name: 'Requiem for a Dream', length: '1:41' },
+		{ name: 'The Fountain', length: '1:36'},
+		{ name: 'The Wrestler', length: '1:49' },
+		{ name: 'Black Swan', length: '1:48'},
+		{ name: 'Noah', length: '2:18' },
+	]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
 	var template = 
 		'<tr class="album-view-song-item">'
@@ -60,3 +75,16 @@ var setCurrentAlbum = function(album) {
 };
 
 setCurrentAlbum(albumPicasso);
+
+var albumArray = [albumPicasso, albumMarconi, albumAranofsky];
+var albumCounter = 0;
+var coverElement = document.getElementsByClassName("album-cover-art")[0];
+
+var albumCycle = function() {
+	if (++albumCounter >= albumArray.length) {
+		albumCounter = 0;
+	}
+	setCurrentAlbum(albumArray[albumCounter]);
+}
+
+coverElement.addEventListener("click", albumCycle);
