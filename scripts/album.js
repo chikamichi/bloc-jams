@@ -62,21 +62,23 @@ var setCurrentAlbum = function(album) {
 setCurrentAlbum(albumPicasso);
 
 var findParentByClassName = function(element, name) {
-	var currentNode = element;
-	while (true) {
-		if (currentNode.parentNode != null) {					// Check for null	
-			if (currentNode.parentNode.className === name) { 	// Check for equality
-				return currentNode.parentNode;					// Return found parent
-			} 
-			else {
-				currentNode = currentNode.parentNode;			// Bubble through hierarchy
+	var currentParent = element.parentNode
+
+	if (currentParent === null) {						// Check for null
+		alert("No parent found");
+	}
+	else {
+		while (currentParent.className != name) {		// Check for equality
+			currentParent = currentParent.parentNode;
+			
+			if (currentParent === null) { 				// Recheck for null
+				alert("No parent found with class " + name);
+				break;
 			}
 		}
-		else {
-			break;
-		}
 	}
-	return null;
+	
+	return currentParent;
 };
 
 var getSongItem = function(element) {
