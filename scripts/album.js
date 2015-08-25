@@ -30,8 +30,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 		
 		if (currentlyPlayingSongNumber === null) {
 			$songItem.html(pauseButtonTemplate);
-			currentlyPlayingSongNumber = songNum;
-			currentSongFromAlbum = currentAlbum.songs[songNum - 1]
+			setSong(songNum);
 			updatePlayerBarSong();
 		}
 		else if (currentlyPlayingSongNumber === songNum) {
@@ -45,8 +44,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 			$currentlyPlayingSongNumberElement.html($currentlyPlayingSongNumberElement.attr('data-song-number'));
 			
 			$songItem.html(pauseButtonTemplate);
-			currentlyPlayingSongNumber = songNum;
-			currentSongFromAlbum = currentAlbum.songs[songNum - 1];
+			setSong(songNum);
 			updatePlayerBarSong();
 		}
 	};
@@ -119,6 +117,11 @@ var getSongElementByNumber = function(num) {
 	return $("[data-song-number='" + num + "']");
 }
 
+var setSong = function(songNumber) {
+	currentlyPlayingSongNumber = songNumber;
+	currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+}
+
 var previousSong = function() {
 	var currentIndex = 4;							// Set to end of album by defau;t
 	
@@ -136,8 +139,7 @@ var previousSong = function() {
 	$lastSongElement.html($lastSongElement.attr('data-song-number'))
 	
 	// Set the new current song using currentIndex
-	currentlyPlayingSongNumber = currentIndex + 1;
-	currentSongFromAlbum = currentAlbum.songs[currentIndex];
+	setSong(currentIndex + 1);
 	
 	// Update buttons to reflect new current song
 	var $newCurrentSongElement = getSongElementByNumber(currentlyPlayingSongNumber);
@@ -164,6 +166,7 @@ var nextSong = function() {
 	$lastSongElement.html($lastSongElement.attr('data-song-number'))
 	
 	// Set the new current song using currentIndex
+	setSong(currentIndex + 1);
 	currentlyPlayingSongNumber = currentIndex + 1;
 	currentSongFromAlbum = currentAlbum.songs[currentIndex];
 	
