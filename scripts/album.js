@@ -194,7 +194,16 @@ var nextSong = function() {
 };
 
 var togglePlayFromPlayerBar = function () {
-	if (currentSoundFile.isPaused()) {		
+	/*
+	if (currentSoundFile) { 					// Check for existing song
+		return;
+	}
+	*/
+	
+	if (currentSoundFile.isPaused()) {			// When song is paused
+		
+	}
+	else if (!currentSoundFile.isPaused())		// When song is oplaying
 	}
 }
 
