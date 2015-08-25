@@ -27,22 +27,27 @@ var createSongRow = function(songNumber, songName, songLength) {
 	var clickHandler = function() {
 		var songNum = parseInt($(this).attr("data-song-number"));
 		
-		if (currentlyPlayingSongNumber !== null) {
+		if (currentlyPlayingSongNumber !== null) {			// If a song is already selected
+			// Reset current song icon to song number
 			var $currentlyPlayingElement = $("[data-song-number='" + currentlyPlayingSongNumber + "']");
 			$currentlyPlayingElement.html($currentlyPlayingElement.attr('data-song-number'));
 		}
 		
-		if (currentlyPlayingSongNumber !== songNum) {
-			$(this).html(pauseButtonTemplate);
-			setSong(songNum);
-			updatePlayerBarSong();
-			//buzz.play(currentSoundFile);
+		if (currentlyPlayingSongNumber !== songNum) { 		// If a different song is selected
+			setSong(songNum);								// Set new song
+			$(this).html(pauseButtonTemplate);				// Toggle pause icon
+			updatePlayerBarSong();							// Update player bar
+			currentSoundFile.play();						// Play the new song file
 		}
-		else if (currentlyPlayingSongNumber === songNum) {
-			$(this).html(playButtonTemplate);
-			$('.left-controls .play-pause').html(playerBarPlayButton);
-			currentlyPlayingSongNumber = null;
-			currentSongFromAlbum = null;
+		else if (currentlyPlayingSongNumber === songNum) {	// Or if the same song is reselected
+			$(this).html(playButtonTemplate);				// Reset the icon template
+			$('.left-controls .play-pause').html(playerBarPlayButton);	// Reset the player bar play icon
+			if (currentSoundFile.isPaused()) {
+				currentSoundFile.play();
+			}
+			else {
+				currentSoundFile.pause();
+			}
 		} 
 	};
 
@@ -50,7 +55,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 		var $hoverSongItem = $(this).find(".song-item-number");
 		var hoverSongNum = parseInt($hoverSongItem.attr("data-song-number"));
 		
-		if (hoverSongNum !== currentlyPlayingSongNumber) {
+		if (hoverSongNum !== currentlyPlayingSongNumber || currentSoundFile.isPaused()) {
 			$hoverSongItem.html(playButtonTemplate);
 		}
 	}
@@ -59,7 +64,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 		var $leaveSongItem = $(this).find(".song-item-number");
 		var leaveSongNum = parseInt($leaveSongItem.attr("data-song-number"));
 		
-		if (leaveSongNum !== currentlyPlayingSongNumber) {
+		if (leaveSongNum !== currentlyPlayingSongNumber || currentSoundFile.isPaused()) {
 			$leaveSongItem.html(leaveSongNum);
 		}
 	}
