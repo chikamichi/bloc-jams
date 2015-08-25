@@ -194,16 +194,21 @@ var nextSong = function() {
 };
 
 var togglePlayFromPlayerBar = function () {
-	/*
-	if (currentSoundFile) { 					// Check for existing song
+	if (!currentSoundFile) { 					// Check for existing song
 		return;
 	}
-	*/
 	
-	if (currentSoundFile.isPaused()) {			// When song is paused
+	var $songElement = getSongElementByNumber(currentlyPlayingSongNumber);
 		
+	if (currentSoundFile.isPaused()) {			// When song is paused
+		$songElement.html(playButtonTemplate);
+		$(this).html(playerBarPlayButton);
+		currentSoundFile.play();
 	}
-	else if (!currentSoundFile.isPaused())		// When song is oplaying
+	else {									// When song is oplaying
+		$songElement.html(pauseButtonTemplate);
+		$(this).html(playerBarPauseButton);
+		currentSoundFile.pause();
 	}
 }
 
