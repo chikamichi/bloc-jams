@@ -8,6 +8,7 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
 var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
+var currentSoundFIle = null;
 
 var $previousButton = $('.left-controls .previous');
 var $nextButton = $('.left-controls .next');
