@@ -120,6 +120,10 @@ var getSongElementByNumber = function(num) {
 }
 
 var setSong = function(songNumber) {
+	if (currentSoundFile) {
+		currentSoundFile.stop();
+	}
+	
 	currentlyPlayingSongNumber = songNumber;
 	currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
 	
