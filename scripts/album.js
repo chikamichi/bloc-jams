@@ -11,8 +11,9 @@ var currentSongFromAlbum = null;
 var currentSoundFile = null;
 var currentVolume = 80;
 
-var $previousButton = $('.left-controls .previous');
-var $nextButton = $('.left-controls .next');
+var $previousButton = $(".left-controls .previous");
+var $nextButton = $(".left-controls .next");
+var $playButton = $(".left-controls .play-pause");
 
 /* Functions */
 var createSongRow = function(songNumber, songName, songLength) {
@@ -192,10 +193,16 @@ var nextSong = function() {
 	updatePlayerBarSong();		// Update player bar
 };
 
+var togglePlayFromPlayerBar = function () {
+	if (currentSoundFile.isPaused()) {		
+	}
+}
+
 setCurrentAlbum(albumPicasso);
 
 $(document).ready(function() {
 	$previousButton.click(previousSong);
 	$nextButton.click(nextSong);
+	$playButton.click(togglePlayFromPlayerBar);
 });
 
