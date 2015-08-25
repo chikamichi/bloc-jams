@@ -8,7 +8,8 @@ var playerBarPauseButton = '<span class="ion-pause"></span>';
 var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
-var currentSoundFIle = null;
+var currentSoundFile = null;
+var currentVolume = 80;
 
 var $previousButton = $('.left-controls .previous');
 var $nextButton = $('.left-controls .next');
@@ -141,7 +142,7 @@ var previousSong = function() {
 		--currentIndex;
 	}
 	
-	if (currentIndex < 0) {						// Wrap around
+	if (currentIndex < 0) {							// Wrap around
 		currentIndex = 4;
 	}
 	
@@ -149,15 +150,13 @@ var previousSong = function() {
 	var $lastSongElement = getSongElementByNumber(currentlyPlayingSongNumber);
 	$lastSongElement.html($lastSongElement.attr('data-song-number'))
 	
-	// Set the new current song using currentIndex
-	setSong(currentIndex + 1);
-	
 	// Update buttons to reflect new current song
-	var $newCurrentSongElement = getSongElementByNumber(currentlyPlayingSongNumber);
+	var $newCurrentSongElement = getSongElementByNumber(currentIndex + 1);
 	$newCurrentSongElement.html(pauseButtonTemplate);
 	
-	// Update player bar
-	updatePlayerBarSong();
+	setSong(currentIndex + 1); 	// Set the new current song using currentIndex
+	currentSoundFile.play();	// Play the new current song
+	updatePlayerBarSong();		// Update player bar
 }
 
 var nextSong = function() {
@@ -176,17 +175,13 @@ var nextSong = function() {
 	var $lastSongElement = getSongElementByNumber(currentlyPlayingSongNumber);
 	$lastSongElement.html($lastSongElement.attr('data-song-number'))
 	
-	// Set the new current song using currentIndex
-	setSong(currentIndex + 1);
-	currentlyPlayingSongNumber = currentIndex + 1;
-	currentSongFromAlbum = currentAlbum.songs[currentIndex];
-	
 	// Update buttons to reflect new current song
-	var $newCurrentSongElement = getSongElementByNumber(currentlyPlayingSongNumber);
+	var $newCurrentSongElement = getSongElementByNumber(currentIndex + 1);
 	$newCurrentSongElement.html(pauseButtonTemplate);
 	
-	// Update player bar
-	updatePlayerBarSong();
+	setSong(currentIndex + 1); 	// Set the new current song using currentIndex
+	currentSoundFile.play();	// Play the new current song
+	updatePlayerBarSong();		// Update player bar
 }
 
 setCurrentAlbum(albumPicasso);
