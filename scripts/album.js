@@ -24,29 +24,26 @@ var createSongRow = function(songNumber, songName, songLength) {
 	
 	var $row = $(template);
 	
-	var clickHandler = function(event) {
-		var $songItem = $(this);
+	var clickHandler = function() {
 		var songNum = parseInt($songItem.attr("data-song-number"));
 		
-		if (currentlyPlayingSongNumber === null) {
-			$songItem.html(pauseButtonTemplate);
+		if (currentlyPlayingSongNumber !== null) {
+			var $currentlyPlayingElement = $("[data-song-number='" + currentlyPlayingSongNumber + "']");
+			$currentlyPlayingElement.html($currentlyPlayingElement.attr('data-song-number'));
+		}
+		
+		if (currentlyPlayingSongNumber !== songNum) {
+			$(this.html(pauseButtonTemplate);
 			setSong(songNum);
 			updatePlayerBarSong();
+			buzz.play(currentSoundFile);
 		}
 		else if (currentlyPlayingSongNumber === songNum) {
-			$songItem.html(playButtonTemplate);
+			$(this.html(playButtonTemplate);
 			$('.left-controls .play-pause').html(playerBarPlayButton);
 			currentlyPlayingSongNumber = null;
 			currentSongFromAlbum = null;
 		} 
-		else if (currentlyPlayingSongNumber !== songNum) {
-			var $currentlyPlayingSongNumberElement = $("[data-song-number='" + currentlyPlayingSongNumber + "']");
-			$currentlyPlayingSongNumberElement.html($currentlyPlayingSongNumberElement.attr('data-song-number'));
-			
-			$songItem.html(pauseButtonTemplate);
-			setSong(songNum);
-			updatePlayerBarSong();
-		}
 	};
 
 	var onHover = function(event) {
@@ -120,6 +117,11 @@ var getSongElementByNumber = function(num) {
 var setSong = function(songNumber) {
 	currentlyPlayingSongNumber = songNumber;
 	currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+	
+	currentSoundFile = new buzz.sound(currentSongFromAlbum.audioUrl, {
+		formats: ["mp3"],
+		preload: true
+	});
 }
 
 var previousSong = function() {
