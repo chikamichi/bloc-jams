@@ -118,7 +118,7 @@ var trackIndex = function (album, song) {
 
 var getSongElementByNumber = function(num) {
 	return $("[data-song-number='" + num + "']");
-}
+};
 
 var setSong = function(songNumber) {
 	if (currentSoundFile) {
@@ -132,7 +132,15 @@ var setSong = function(songNumber) {
 		formats: ["mp3"],
 		preload: true
 	});
-}
+	
+	setVolume(currentVolume);
+};
+
+var setVolume = function(newVolume) {
+	if (currentSoundFile) {
+		currentSoundFile.setVolume(newVolume);
+	}
+};
 
 var previousSong = function() {
 	var currentIndex = 4;							// Set to end of album by defau;t
@@ -157,7 +165,7 @@ var previousSong = function() {
 	setSong(currentIndex + 1); 	// Set the new current song using currentIndex
 	currentSoundFile.play();	// Play the new current song
 	updatePlayerBarSong();		// Update player bar
-}
+};
 
 var nextSong = function() {
 	var currentIndex = 0;						// Set to start of album by defau;t
@@ -182,7 +190,7 @@ var nextSong = function() {
 	setSong(currentIndex + 1); 	// Set the new current song using currentIndex
 	currentSoundFile.play();	// Play the new current song
 	updatePlayerBarSong();		// Update player bar
-}
+};
 
 setCurrentAlbum(albumPicasso);
 
