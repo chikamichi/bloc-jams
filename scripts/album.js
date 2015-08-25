@@ -25,7 +25,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 	var $row = $(template);
 	
 	var clickHandler = function() {
-		var songNum = parseInt($songItem.attr("data-song-number"));
+		var songNum = parseInt($(this).attr("data-song-number"));
 		
 		if (currentlyPlayingSongNumber !== null) {
 			var $currentlyPlayingElement = $("[data-song-number='" + currentlyPlayingSongNumber + "']");
@@ -33,13 +33,13 @@ var createSongRow = function(songNumber, songName, songLength) {
 		}
 		
 		if (currentlyPlayingSongNumber !== songNum) {
-			$(this.html(pauseButtonTemplate);
+			$(this).html(pauseButtonTemplate);
 			setSong(songNum);
 			updatePlayerBarSong();
-			buzz.play(currentSoundFile);
+			//buzz.play(currentSoundFile);
 		}
 		else if (currentlyPlayingSongNumber === songNum) {
-			$(this.html(playButtonTemplate);
+			$(this).html(playButtonTemplate);
 			$('.left-controls .play-pause').html(playerBarPlayButton);
 			currentlyPlayingSongNumber = null;
 			currentSongFromAlbum = null;
