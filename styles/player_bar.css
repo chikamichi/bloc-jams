@@ -30,7 +30,6 @@
 .player-bar .left-controls {
 	width: 25%;
 	text-align: left;
-	padding-right: 1rem;
 }
 
 .player-bar .currently-playing {
@@ -46,17 +45,22 @@
 
 .player-bar .player-bar-control-group a {
 	font-size: 1.1rem;
-	vertical-align: middle;
 	cursor: pointer;
 }
 
 .player-bar .player-bar-control-group .previous {
-	margin-right: 16.5%;
+	display: inline-block;
+}
+
+.player-bar .player-bar-control-group .next  {
+	display: inline-block;
 }
 
 .player-bar .player-bar-control-group .play-pause {
-	margin-right: 15%;
 	font-size: 1.6rem;
+	width: 40%;
+	text-align: center;
+	display: inline-block;
 }
 
 .player-bar .currently-playing {
@@ -115,7 +119,7 @@
 
 .seek-bar .fill {
 	background: white;
-	width: 36%;
+	width: 0%;
 	height: 0.25rem;
 	border-radius: 2px;
 }
@@ -124,8 +128,8 @@
 	position: absolute;
 	width: 0.5rem;
 	height: 0.5rem;
-	background:white;
-	left: 50%;
+	background: white;
+	left: 0%;
 	top: 50%;
 	margin-left: -0.25rem;
 	margin-top: -0.25rem;
