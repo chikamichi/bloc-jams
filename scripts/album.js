@@ -114,13 +114,14 @@ var updateSeekPercentage = function ($seekBar, seekBarFillRatio) {
 
 var updateSeekBarWhileSongPlays = function() {
 	if (currentSoundFile) {
-		currentSoundFile.bind("timeupdate", function(event) {
-			var seekBarFillRatio = this.getTime()/this.getDuration();
-			var $seekBar = $(".seek-control .seek-bar");
-			
+		currentSoundFile.bind("timeupdate", function timeUpdate(event) {
 			// Only update when the song is playing
 			if (!currentSoundFile.isPaused()) {
+				var seekBarFillRatio = this.getTime()/this.getDuration();
+				var $seekBar = $(".seek-control .seek-bar");
 				updateSeekPercentage($seekBar, seekBarFillRatio);
+				setCurrentTimeInPlayerBar(currentSoundFile.getTime());
+				setTotalTimeInPlayerBar(currentSoundFile.getDuration());
 			}
 		});
 	}
@@ -181,6 +182,7 @@ var updatePlayerBarSong = function() {
 	}
 	
 	if (currentSoundFile) {
+		// Set default volume
 		var $volumeSeekBar = $(".volume .seek-bar");
 		var volumeDefault = currentSoundFile.getVolume()/100
 		updateSeekPercentage($volumeSeekBar, volumeDefault);
@@ -245,7 +247,6 @@ var togglePlayFromPlayerBar = function () {
 	if (!currentSoundFile) { 					// Check for existing song
 		return;
 	}
-	
 	var $songElement = getSongElementByNumber(currentlyPlayingSongNumber);
 		
 	if (currentSoundFile.isPaused()) {			// When song is paused
@@ -291,6 +292,28 @@ var setVolume = function(newVolume) {
 		currentSoundFile.setVolume(newVolume);
 	}
 };
+
+var setCurrentTimeInPlayerBar = function(currentTime) {
+	$(".current-time").text(parseTimeCode(currentTime));
+}
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+	$(".total-time").text(parseTimeCode(totalTime));
+}
+
+var parseTimeCode = function(timeInSeconds) {
+	/*
+	var formattedTime = buzz.toTimer(timeInSeconds);
+	return formattedTime;
+	*/
+	var minutes = Math.floor(timeInSeconds/60);
+	var seconds = Math.floor(timeInSeconds - (minutes * 60));
+	var formattedTime = minutes + ":";
+	if (seconds < 10)	{formattedTime += "0";}
+	formattedTime += seconds;
+	
+	return formattedTime;
+}
 
 /* Main */
 setCurrentAlbum(albumPicasso);
