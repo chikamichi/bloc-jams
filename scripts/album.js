@@ -118,7 +118,10 @@ var updateSeekBarWhileSongPlays = function() {
 			var seekBarFillRatio = this.getTime()/this.getDuration();
 			var $seekBar = $(".seek-control .seek-bar");
 			
-			updateSeekPercentage($seekBar, seekBarFillRatio);
+			// Only update when the song is playing
+			if (!currentSoundFile.isPaused()) {
+				updateSeekPercentage($seekBar, seekBarFillRatio);
+			}
 		});
 	}
 };
@@ -133,24 +136,26 @@ var setupSeekBars = function() {
 		
 		if ($(this).parents("div.seek-control").length > 0 && currentSoundFile) {
 			seek(seekBarFillRatio * currentSoundFile.getDuration());
+			updateSeekPercentage($(this), seekBarFillRatio);
 		}
 		else if ($(this).parents("div.volume").length > 0 && currentSoundFile) {
 			currentSoundFile.setVolume(seekBarFillRatio * 100);
+			updateSeekPercentage($(this), seekBarFillRatio);
 		}
-		updateSeekPercentage($(this), seekBarFillRatio);
 	});
 	
 	$seekBars.find(".thumb").mousedown(function(event) {
 		var $seekBar = $(this).parent();
 		$(document).bind("mousemove.thumb", function(event) {
+			currentSoundFile.pause();	// Pause the song while seeking
 			var offsetX = event.pageX - $seekBar.offset().left;
 			var barWidth = $seekBar.width();
 			var seekBarFillRatio = offsetX/barWidth;
-		
 			updateSeekPercentage($seekBar, seekBarFillRatio);
 		});
 		
 		$(document).bind("mouseup.thumb", function() {
+			currentSoundFile.play();	// Play the song once seeking is done
 			$(document).unbind('mousemove.thumb');
 			$(document).unbind('mouseup.thumb');
 		});
